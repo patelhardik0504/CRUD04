@@ -21,12 +21,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/login', [LoginController::class, 'logincheck']);
-Route::get('/register', [RegisterController::class, 'register']);
-
-
-Route::post('/register', [RegisterController::class, 'savedata']);
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'login'])->name('login');
+    Route::post('/login', [LoginController::class, 'logincheck']);
+    Route::get('/register', [RegisterController::class, 'register']);
+    
+    
+    Route::post('/register', [RegisterController::class, 'savedata']);
+});
 
 
 Route::post('/fetch-states', [DropdownController::class, 'fetchState']);
